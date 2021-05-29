@@ -9,7 +9,7 @@ import userData from './data/users.js'
 const seedDatabase = async () => {
   try {
     // * connect database
-    await mongoose.connect(dbURI, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true } )
+    await mongoose.connect(dbURI, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
     console.log('🥳 Database connected successfully')
 
     // * drop database
@@ -34,6 +34,8 @@ const seedDatabase = async () => {
 
   } catch (err) {
     console.log(err)
+    await mongoose.connection.close()
+    console.log('👋🏼 Bye')
   }
 }
 seedDatabase()

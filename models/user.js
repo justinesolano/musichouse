@@ -7,6 +7,15 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
 })
 
+// * Reverse relationship to see what songs user has created
+userSchema.virtual('createdSongs', {
+  ref: 'Song',
+  localField: '_id',
+  foreignField: 'owner',
+})
+
+
+// * Remove password from user when populating
 userSchema.set('toJSON', {
   virtuals: true,
   transform(_doc, json) {
@@ -24,23 +33,23 @@ userSchema
   
   })
 
+// * Check if password and passwordConfirmation match
+userSchema
+  .pre('validate', function(next) {
+    if (this.isModified('password') && this.password !== this._passwordConfirmation){
+      this.invalidate('passwordConfirmation', 'Passwords do not match')
+    }
+    next()
+  })
 
-  userSchema
-    .pre('validate', function(next) {
-      if (this.isModified('password') && this.password !== this._passwordConfirmation){
-        this.invalidate('passwordConfirmation', 'Passwords do not match')
-      }
-      next()
-    })
 
-
-    userSchema
-      .pre('save', function(next){
-        if (this.isModified('password')){
-          this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync())
-        }
-        next()
-      })
+userSchema
+  .pre('save', function(next){
+    if (this.isModified('password')) {
+      this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync())
+    }
+    next()
+  })
 
 userSchema.methods.validatePassword = function(password){
   return bcrypt.compareSync(password, this.password)

@@ -1,11 +1,11 @@
-import { response } from 'express'
-import Song from '../index.js'
+// import { response } from 'express's
+import Song from '../models/song.js'
 
 // * INDEX
 export const getAllSongs = async (_req, res) => {
   const songs = await Song.find()
   console.log('SONGS', songs)
-  return res.status(200).json(shows)
+  return res.status(200).json(songs)
 }
 
 // * CREATE
@@ -44,12 +44,14 @@ export const getOneSong = async (req, res) => {
 }
 
 // * DELETE
-export const deleteShow = async (req, res) => {
+export const deleteSong = async (req, res) => {
   try {
     const { id } = req.params
     const songToDelete = await Song.findById(id)
     if (!songToDelete) throw new Error()
-    if (!showToDelete.owner.equals(req.currentUser._id)) throw new Error('Unauthorized 🙅🏻‍♀️')
+    if (!songToDelete.owner.equals(req.currentUser._id)) throw new Error('Unauthorized 🙅🏻‍♀️')
+    await showToDelete.remove()
+    return res.status(204).json({ 'message': 'item deleted' })
   } catch(err) {
     console.log(err)
     return res.status(404).json({ 'message': 'Not Found' })
@@ -71,14 +73,14 @@ export const updateSong = async (req, res) => {
   }
 }
 
-// * ADD COMMENT TO SHOW
+// * ADD COMMENT TO SONG
 export const addCommentToSong = async (req, res)=> {
   try { 
     const { id } = req.params
     const song = await Song.findById(id)
-    if (!song) throw new Error('Cannot find show 🤷🏻‍♀️')
+    if (!song) throw new Error('Cannot find song 🤷🏻‍♀️')
     const newComment = { ...req.body, owner: req.currentUser._id }
-    show.comments.push(newComment)
+    song.comments.push(newComment)
     await song.save()
     return res.status(200).json(song)
   } catch (err) {

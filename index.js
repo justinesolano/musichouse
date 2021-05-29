@@ -2,12 +2,8 @@ import express from 'express'
 import mongoose from 'mongoose'
 import { port, dbURI } from './config/environment.js'
 
-const app = express()
-// const port = 4000
-// const dbURI = 'mongodb://localhost/musichouse'
 import router from './config/router.js'
-
-app.use(express.json())
+const app = express()
 
 const startServer = async() => {
   try {

@@ -4,7 +4,7 @@ import mongoose from 'mongoose'
 const commentsSchema = new mongoose.Schema({
   text: { type: String, required: true, maxlength: 300 },
   rating: { type: Number, required: true, min: 1, max: 5 },
-  owner: { type: mongoose.Schema.ObjectId , ref: 'User', required: true },
+  owner: { type: mongoose.Schema.ObjectId, ref: 'User', required: true },
 }, {
   timestamps: true,
 })
@@ -30,6 +30,8 @@ musicSchema
     }, 0)
     return sum / this.comments.length
   })
+
+musicSchema.set('toJSON', { virtuals: true })
 
 
 export default mongoose.model('Song', musicSchema)
