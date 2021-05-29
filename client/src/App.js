@@ -7,13 +7,17 @@ const App = () => {
   useEffect(() => {
     const getData = async () => {
       const { data } = await axios.get('/api/songs')
-      setShows(data)
+      setSongs(data)
     }
     getData()
   }, [])
 
   return (
-    <div>Hello World!</div>
+    <>
+      {songs.map(show => {
+        return <h1 key={show._id}>{show.title}</h1>
+      })}
+    </>
   )
 }
 export default App
