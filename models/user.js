@@ -7,6 +7,13 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
 })
 
+userSchema.set('toJSON', {
+  virtuals: true,
+  transform(_doc, json) {
+    delete json.password
+    return json
+  }
+})
 
 
 // * Define virtual field on schema

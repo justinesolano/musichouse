@@ -1,25 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 
-function App() {
+const App = () => {
+  const [songs, setSongs] = useState([])
+
+  useEffect(() => {
+    const getData = async () => {
+      const { data } = await axios.get('/api/songs')
+      setShows(data)
+    }
+    getData()
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <div>Hello World!</div>
+  )
 }
-
-export default App;
+export default App
