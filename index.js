@@ -8,17 +8,6 @@ const app = express()
 
 app.use(express.json())
 
-const musicSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  artists: { type: String, required: true },
-  yearReleased: { type: String, required: true },
-  album: { type: String, required: true },
-  albumCover: { type: String, required: true },
-  duration: { type: String, required: true },
-})
-
-const Song = mongoose.model('Song', musicSchema)
-
 const startServer = async() => {
   try {
     await mongoose.connect(dbURI, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
