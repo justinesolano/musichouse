@@ -1,10 +1,16 @@
 import express from 'express'
-import { getAllSongs, getOneSong, addSong, deleteSong, updateSong, addCommentToSong, deleteCommentFromSong } from '../controllers/songs.js'
+import { getAllSongs, getOneSong, addSong, deleteSong, updateSong, addCommentToSong, deleteCommentFromSong, addRatingToSong } from '../controllers/songs.js'
 import { registerUser, loginUser } from '../controllers/auth.js'
-import { getUserProfile } from '../controllers/users.js'
+import { getUserProfile, getUserProfiles, addToFavourites } from '../controllers/users.js'
 import { secureRoute } from '../config/secureRoute.js'
 
 const router = express.Router()
+
+router.route('/register')
+  .post(registerUser)
+
+router.route('/login')
+  .post(loginUser)
 
 router.route('/songs')
   .get(getAllSongs)
@@ -15,17 +21,23 @@ router.route('/songs/:id')
   .put(secureRoute, updateSong)
   .delete(secureRoute, deleteSong)
 
+router.route('/songs/:id/ratings')
+  .post(secureRoute, addRatingToSong)
+
 router.route('/songs/:id/comments')
   .post(secureRoute, addCommentToSong)
 
 router.route('/songs/:id/comments/:commentId')
   .delete(secureRoute, deleteCommentFromSong)
 
-router.route('/register')
-  .post(registerUser)
+  router.route('/profiles')
+  .get(getUserProfiles)
 
-router.route('/login')
-  .post(loginUser)
+  router.route('/profiles/:id')
+  .get(getUserProfile)
+
+  router.route('/profiles/:id/favourites')
+  .post(secureRoute, addToFavourites)
 
 router.route('/profile')
   .get(secureRoute, getUserProfile)

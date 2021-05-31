@@ -17,7 +17,7 @@ const seedDatabase = async () => {
     console.log('💧 DB dropped')
 
     const users = await User.create(userData)
-    console.log(`DB seeded with ${users.length} users`)
+    console.log(`🙋🏻‍♀️ DB seeded with ${users.length} users`)
 
     const songsWithUsers = songData.map(song => {
       song.owner = users[0]._id

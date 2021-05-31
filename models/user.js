@@ -5,17 +5,9 @@ const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true, maxlength: 40 },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  myList: { type: Array, unique: true },
-  myTags: { type: Array, unique: true },
+  // favourites: { type: Array, unique: true },
+  // picture: { type: String, maxlength: 1000 },
 })
-
-// * Reverse relationship to see what songs user has created
-userSchema.virtual('createdSongs', {
-  ref: 'Song',
-  localField: '_id',
-  foreignField: 'owner',
-})
-
 
 // * Remove password from user when populating
 userSchema.set('toJSON', {
@@ -26,13 +18,11 @@ userSchema.set('toJSON', {
   }
 })
 
-
 // * Define virtual field on schema
 userSchema
   .virtual('passwordConfirmation')
   .set(function(passwordConfirmation){
     this._passwordConfirmation = passwordConfirmation
-  
   })
 
 // * Check if password and passwordConfirmation match
@@ -53,7 +43,7 @@ userSchema
     next()
   })
 
-userSchema.methods.validatePassword = function(password){
+userSchema.methods.validatePassword = function (password) {
   return bcrypt.compareSync(password, this.password)
 }
 
