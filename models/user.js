@@ -2,9 +2,11 @@ import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
 
 const userSchema = new mongoose.Schema({
-  username: { type: String, required: true, unique: true, maximumLength: 40 },
+  username: { type: String, required: true, unique: true, maxlength: 40 },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  myList: { type: Array, unique: true },
+  myTags: { type: Array, unique: true },
 })
 
 // * Reverse relationship to see what songs user has created

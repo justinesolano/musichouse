@@ -1,4 +1,3 @@
-// import { response } from 'express's
 import Song from '../models/song.js'
 
 // * INDEX
@@ -105,5 +104,3 @@ export const deleteCommentFromSong = async (req, res) => {
     return res.status(404).json({ message: err.message })
   }
 }
-
-export default Song

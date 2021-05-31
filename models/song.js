@@ -9,6 +9,12 @@ const commentsSchema = new mongoose.Schema({
   timestamps: true,
 })
 
+const likesSchema = new mongoose.Schema({
+  like: { type: Boolean, required: true },
+  owner: { type: mongoose.Schema.ObjectId, ref: 'User', required: true },
+})
+
+
 const musicSchema = new mongoose.Schema({
   name: { type: String, required: true },
   artists: { type: String, required: true },
@@ -18,6 +24,7 @@ const musicSchema = new mongoose.Schema({
   duration: { type: String, required: true },
   owner: { type: mongoose.Schema.ObjectId, ref: 'User', required: true },
   comments: [commentsSchema],
+  likes: [likesSchema],
 })
 
 // * Calculate avg rating
