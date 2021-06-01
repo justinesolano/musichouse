@@ -47,9 +47,8 @@ export const deleteSong = async (req, res) => {
   try {
     const { id } = req.params
     const songToDelete = await Song.findById(id)
-    if (!songToDelete) throw new Error()
-    if (!songToDelete.owner.equals(req.currentUser._id)) throw new Error('Unauthorized 🙅🏻‍♀️')
-    await showToDelete.remove()
+    if (!songToDelete) throw new Error('That song is not currently in our database!')
+    await songToDelete.remove()
     return res.status(204).json({ 'message': 'item deleted' })
   } catch(err) {
     console.log(err)

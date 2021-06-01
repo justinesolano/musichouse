@@ -20,9 +20,9 @@ export const loginUser = async (req, res) => {
       throw new Error()
     }
     const token = jwt.sign({ sub: userToLogin._id }, secret, { expiresIn: '2 days' })
-    return res.status(200).json({ message: `You're ready for take-off ${userToLogin.username}`, token })
+    return res.status(200).json({ message: `The music is ready for you, ${userToLogin.username}!`, token })
   } catch (err) {
     console.log(err)
-    return res.status(422).json({ message: 'You are not ready for take-off!' })
+    return res.status(422).json({ message: 'Your email or password is wrong, please try again.' })
   }
 }

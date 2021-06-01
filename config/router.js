@@ -30,16 +30,13 @@ router.route('/songs/:id/comments')
 router.route('/songs/:id/comments/:commentId')
   .delete(secureRoute, deleteCommentFromSong)
 
-  router.route('/profiles')
+router.route('/profiles')
   .get(getUserProfiles)
 
-  router.route('/profiles/:id')
+router.route('/profiles/:id')
   .get(getUserProfile)
 
-  router.route('/profiles/:id/favourites')
+router.route('/profiles/:id/favourites')
   .post(secureRoute, addToFavourites)
-
-router.route('/profile')
-  .get(secureRoute, getUserProfile)
 
 export default router

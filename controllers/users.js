@@ -25,7 +25,7 @@ export const addToFavourites = async (req, res) => {
     const { id } = req.params
     const user = await User.findById(id)
     if (!user) throw new Error('Cannot find user')
-    if (!user._id.equals(req.currentUser._id)) throw new Error('Unauthorized')
+    if (!user._id.equals(req.currentUser._id)) throw new Error('You cannot add this to favourites as you are unauthorized.')
     const newFavourites = { ...req.body }
     user.favourites.push(newFavourites)
     await user.save()

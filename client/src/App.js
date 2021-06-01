@@ -1,5 +1,6 @@
 import React from 'react' // step 61 import state and effect
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import NavBar from './components/NavBar.js'
 
 
 const App = () => { 
@@ -9,8 +10,8 @@ const App = () => {
   return (
     <BrowserRouter>
       <Switch>
+        <NavBar />
         <Route>
-          <h1>Hello World!</h1>
         </Route>
       </Switch>
     </BrowserRouter>
